@@ -19,25 +19,6 @@ import { useRef } from "react";
 import { onDataAction } from "@/app/actions";
 import { schema } from "@/lib/types";
 
-function ErrorMessage({
-  errors,
-  identifier,
-}: {
-  errors: string[] | undefined;
-  identifier: string;
-}) {
-  return (
-    <div id={identifier + "-error"} aria-live="polite" aria-atomic="true">
-      {errors &&
-        errors.map((error: string) => (
-          <p className="mt-2 text-sm font-medium text-destructive" key={error}>
-            {error}
-          </p>
-        ))}
-    </div>
-  );
-}
-
 export const RegistrationForm = () => {
   const initialState = { message: "" };
   const [state, formAction] = useFormState(onDataAction, initialState);
@@ -51,6 +32,7 @@ export const RegistrationForm = () => {
       email: "",
       ...(state?.fields ?? {}),
     },
+    errors: state.errors,
   });
 
   return (
@@ -88,7 +70,6 @@ export const RegistrationForm = () => {
                 </FormControl>
                 <FormDescription>Your first name.</FormDescription>
                 <FormMessage />
-                <ErrorMessage errors={state.errors?.first} identifier="first" />
               </FormItem>
             )}
           />
@@ -103,7 +84,6 @@ export const RegistrationForm = () => {
                 </FormControl>
                 <FormDescription>Your last name.</FormDescription>
                 <FormMessage />
-                <ErrorMessage errors={state.errors?.last} identifier="last" />
               </FormItem>
             )}
           />
@@ -119,7 +99,6 @@ export const RegistrationForm = () => {
               </FormControl>
               <FormDescription>Your email address.</FormDescription>
               <FormMessage />
-              <ErrorMessage errors={state.errors?.email} identifier="email" />
             </FormItem>
           )}
         />

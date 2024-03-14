@@ -1,3 +1,4 @@
+import { FieldErrors } from "react-hook-form";
 import { z } from "zod";
 
 export const schema = z.object({
@@ -14,10 +15,6 @@ export const schema = z.object({
 
 export type PersonState = {
   fields?: Record<string, string>;
-  errors?: {
-    first?: string[];
-    last?: string[];
-    email?: string[];
-  };
+  errors?: FieldErrors;
   message?: string | null;
 };
